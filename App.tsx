@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet, StatusBar, TextInput } from 'react-native';
 import Register from './src/components/Register';
 import ForgotPassword from './src/components/ForgotPassword'; 
-import HomeScreen from './src/components/HomeScreen'; // <-- 1. ИМПОРТ ГЛАВНОГО ЭКРАНА
+import HomeScreen from './src/components/HomeScreen';
+import SearchScreen from './src/components/SearchScreen';
+import BranchScreen from './src/components/BranchScreen';
 
 export default function App() {
-  // Добавляем 'home' в список возможных экранов
-  const [currentScreen, setCurrentScreen] = useState<'login' | 'register' | 'forgot' | 'home'>('login');
+
+  const [currentScreen, setCurrentScreen] = useState<'login' | 'register' | 'forgot' | 'home' | 'search' | 'branch'>('search');
 
   if (currentScreen === 'register') {
     return <Register onBack={() => setCurrentScreen('login')} />;
@@ -16,9 +18,15 @@ export default function App() {
     return <ForgotPassword onBack={() => setCurrentScreen('login')} />;
   }
 
-  // <-- 2. ЕСЛИ ЭКРАН 'home' — ПОКАЗЫВАЕМ ЕГО
   if (currentScreen === 'home') {
     return <HomeScreen />;
+  }
+
+  if (currentScreen === 'search') {
+  return <SearchScreen onSelectBranch={() => setCurrentScreen('branch')} />;
+  }
+  if (currentScreen === 'branch') {
+    return <BranchScreen onBack={() => setCurrentScreen('search')} />;
   }
 
   return (
